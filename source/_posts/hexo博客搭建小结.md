@@ -49,7 +49,7 @@ hexo默认使用Landspace主题，不是很好用，也不够好看，还是支�
 
 这个路径下载Next最新版本，Next在Github维护，有兴趣可以看看。
 
-下载完成后，将站根目录下的 _config.yml 文件中的 theme 字段值改为 “next”。
+下载完成后，将站根目录下的_config.yml 文件中的 theme 字段值改为 “next”。
 
 ## Hexo使用和Next配置
 
@@ -67,18 +67,20 @@ hexo默认使用Landspace主题，不是很好用，也不够好看，还是支�
 
 为了节省操作，利用node.js的shelljs模块，将hexo发布操作作为出发机制，发布时完成站源码push到github上去。
 
-#### 将站源码加入Git仓库
+### 将站源码加入Git仓库
 
 > $ git remote add origin git@github.com:XXX/XXX.git
 > $ git pull origin master
 
 为了加快push操作，修改.gitignore文件（如果没有请手动创建一个），在里面加入*.log 和 public/ 以及.deploy*/。因为每次执行hexo generate命令时，上述目录都会被重写更新，可忽略这两个目录下的文件。
 
-#### 安装shelljs模块
+### 安装shelljs模块
 
 > $ npm install --save shelljs
 
-#### 脚本文件
+### 脚本文件
+
+[解决方案链接](http://zhujiegao.com/2015/12/06/automatic-backup/)，并非原创。
 
 在站源码目录下，新建一个scripts目录，在scripts目录下新建任意名称js文件。js文件内容如下：
 
@@ -116,8 +118,7 @@ function run() {
 ```
 注意修改到自己的站源码目录，以及注意git分支名（这个一般都不用改）。
 
-这些工作完成后，以后deploy的时候，站源码文件也上传到github仓库了。不过，我没有使用ssh，还需要手输入用户名和密码 =_=。并非原创，[解决方案链接](http://zhujiegao.com/2015/12/06/automatic-backup/)。
-
+这些工作完成后，以后deploy的时候，站源码文件也上传到github仓库了。不过，我没有使用ssh，还需要手输入用户名和密码=_=。
 
 ## 一些想说的话
 
