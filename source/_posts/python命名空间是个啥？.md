@@ -43,4 +43,97 @@ py中作用域有四种，就是常说的LEGB啦。
 - 内建命名空间（\_\_builtins\_\_）：内置模块空间，Python 解释器启动时自动载入__built__模块后所形成的名称空间
 
 当程序引用某个变量的名字时，就会从当前名字空间开始搜索。搜索顺序规则便是: LEGB.
-> locals -> enclosing function -> globals -> \_\_builtins\_\_
+> locals（内层locals->外层locals） -> enclosing function -> globals -> \_\_builtins\_\_
+
+```python
+#!/usr/bin/env python
+# encoding: utf-8
+
+
+def func1():
+    x = 1
+    print 'func1_head globals:', globals()
+    print 'func1_head locals:', locals()
+
+    def func2():
+        a = 1
+        print 'fun2_head lacals:', locals()
+        print 'fun2_head globals:', globals()
+        a += x
+        print 'fun2_end locals:', locals()
+        print 'fun2_head globals:', globals()
+
+    func2()
+    print 'after_end func1:', locals()
+    print 'func1_end globals:', globals()
+
+if __name__ == '__main__':
+    func1()
+```
+
+```
+# 结果
+➜  my-python python legb.py
+func1_head globals: {'func1': <function func1 at 0x7f7721b295f0>, '__builtins__': <module '__builtin__' (built-in)>, '__file__': 'legb.py', '__package__': None, '__name__': '__main__', '__doc__': None}
+func1_head locals: {'x': 1}
+fun2_head lacals: {'a': 1, 'x': 1}
+fun2_head globals: {'func1': <function func1 at 0x7f7721b295f0>, '__builtins__': <module '__builtin__' (built-in)>, '__file__': 'legb.py', '__package__': None, '__name__': '__main__', '__doc__': None}
+fun2_end locals: {'a': 2, 'x': 1}
+fun2_head globals: {'func1': <function func1 at 0x7f7721b295f0>, '__builtins__': <module '__builtin__' (built-in)>, '__file__': 'legb.py', '__package__': None, '__name__': '__main__', '__doc__': None}
+after_end func1: {'x': 1, 'func2': <function func2 at 0x7f7721b296e0>}
+func1_end globals: {'func1': <function func1 at 0x7f7721b295f0>, '__builtins__': <module '__builtin__' (built-in)>, '__file__': 'legb.py', '__package__': None, '__name__': '__main__', '__doc__': None}
+```
+主要关注局部命名空间，每个函数都有自己的局部命名空间，当内层函数需要某个引用时，就会一层一层的向外层查找，这个向外层查找的顺序就是LEGB法则。例子中，func2中需要用到x，命名空间会自动向外找到x并加入到命名空间。如果没找到就会报“NameError”的错误。
+
+## 生命周期
+每个命名空间都有自己的生命周期，它们并不是同时生成的。
+
+- \_\_builtins\_\_: 在python解释器启动的时候，便已经创建,直到退出
+- globals: 在模块定义被读入时创建，通常也一直保存到解释器退出。
+- locals : 在函数调用时创建, 直到函数返回，或者抛出异常之后，销毁。比较特殊的，递归函数每一次均有自己的名字空间。
+
+一个改造的例子
+```python
+#!/usr/bin/env python
+# encoding: utf-8
+
+
+def func():
+    if False:
+        x = 10 #该语句永远不执行
+    print 'func locals', locals()
+    #print x
+
+if __name__ == '__main__':
+    func()
+```
+
+结果
+```
+➜  my-python python legb_life.py
+func locals {}
+
+# 取消print打印
+➜  my-python python legb_life.py
+func locals {}
+Traceback (most recent call last):
+  File "legb_life.py", line 12, in <module>
+    func()
+  File "legb_life.py", line 9, in func
+    print x
+UnboundLocalError: local variable 'x' referenced before assignment
+```
+可以看到，函数func的局部命名空间中并没有x。在打印x时会报错“UnboundLocalError”，这是由于在编译期间，解释器就将“名字”加入到局部命名空间，但是到了执行时，发现x没有值，就会报错。
+
+## 赋值操作的根本
+> 赋值操作的本质是修改命名空间，而不是修改对象
+
+```python
+a = 1
+b = []
+b.append(1)
+```
+把a加入到命名空间，并将它指向一个值为1的整数对象；把b加入命名空间，并将它指向一个值为空的list对象，而append操作只是改变list对象的值，并没有改变它的内存地址，没有涉及到命名空间变化。要区分这样对象的区别。
+
+## 小结一下
+这一番下来，我就可以理解为什么在一个函数或类中可以出现多个同名的变量，并且，还了解了对象是怎么被找到的。
