@@ -46,4 +46,38 @@ tags:
 ```
 可以看出，dependencyManagement内部就是一个完整的dependencies。
 
+```
+pom.xml
+|-project
+    |- ...
+    |-dependencyManagement
+    |         |-dependencies
+    |               |- ...
+    |               |-dependency
+    |                     |-groupId
+    |                     |-artifactId  
+    |                     |-version
+    |                     |-scope
+    |- ...
+```
+```
+pom.xml
+|-project
+    |- ...
+    |-dependencies
+    |      |- ...
+    |      |-dependency
+    |            |-groupId
+    |            |-artifactId  
+    |            |-version
+    |            |-scope
+    |- ...
+```
+
 ## 配置项说明
+| 配置项          | 是否必配        |     含义        |
+| :------------- | :------------- | :------------- |
+|  groupId  |    是      | 一般表项目名称       |
+|  artifactId |   是    |  一般表模块名称    |
+|  version  |  是     |   模块版本    |
+|  scope  |   否     |   依赖范围，默认为     |
