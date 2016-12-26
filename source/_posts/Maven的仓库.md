@@ -134,6 +134,57 @@ pom.xml
 - 由于settings.xml不能直接支持repositories和pluginRepositories，可以使用profile来辅助配置，并设置activeProfile永久激活。这里就不做细述。
 - 通过mirror来配置远程仓库地址
 
+```
+<settings>
+...
+    <profiles>
+        <profile>
+            <id>profile-default</id>
+            <repositories>
+                <repository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>repo-osc-thirdparty</id>
+                    <url>http://maven.oschina.net/content/repositories/thirdparty/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://central</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>profile-default</activeProfile>
+        <!--<activeProfile>profile-iss</activeProfile>-->
+    </activeProfiles>
+...
+</settings>
+```
+
 ##### 镜像
 镜像只能在settings.xml文件中配置，一个常用的ali镜像
 ```
