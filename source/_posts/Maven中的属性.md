@@ -42,6 +42,8 @@ tags:
     ${env.JAVA_HOME} ：表示JAVA_HOME环境变量的值;
     ```
 
+<!-- more -->
+
 ## 用户自定义属性
 用户自定义的属性可以定义在project标签下的properties、profile下的properties。
 ```

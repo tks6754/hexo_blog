@@ -17,6 +17,8 @@ Maven中默认提供一种很简单，但是很有用的机制：过滤参数。
 ## resource资源文件的参数过滤
 其实这是maven中默认的resource插件maven-resources-plugin支持的过滤功能。所谓过滤，就是在build时，将外部的properties文件的键值对或pom文件中配置的properties键值对，来替换资源文件中的 ${param.key}，起到统一管理配置的效果。
 
+<!-- more -->
+
 常见过滤使用
 ```
 <project>

@@ -8,7 +8,7 @@ tags:
     - plugin
     - 生命周期
 ---
-Maven使用过程中常常用到这样一些指令 mvn install、mvn clean等，这些install或clean都是Maven生命周期（Build Lifecycle）的阶段（phase）。Maven的生命周期是一个抽象的概念，类似于网络协议的7层网络协议，真正实现功能的是TCP/IP。在maven中，生命周期分为很多阶段，但都是抽象出来的概念，具体的实现通过maven插件来完成的。
+Maven使用过程中常常用到这样一些指令 mvn install、mvn clean等，这些install或clean都是Maven生命周期（Build Lifecycle）的阶段（phase）。Maven的生命周期是一个抽象的概念，类似于网络协议的7层网络协议，真正实现的是TCP/IP。在maven中，生命周期分为很多阶段，但都是抽象出来的概念，具体的实现通过maven插件来完成的。
 
 ## maven中的生命周期
 完整的项目build过程需要很多步骤，基本的包括clean、compile、package、deploy。maven把这些步骤总结归纳为3个生命周期：clean生命周期、default生命周期、site生命周期
@@ -62,59 +62,83 @@ Maven使用过程中常常用到这样一些指令 mvn install、mvn clean等，
 - 对于3个生命周期而言，三者是相互独立的。即，指定运行某个生命周期的阶段，不会影响到其他周期内的阶段。
 - 插件的目标：每一个插件都不是只实现一个功能，一个常见可能会支持多个功能，这样的单独一个功能称为插件的目标。
 - 生命周期的阶段绑定到插件，通过插件来实现具体功能,具体是绑定到插件的目标。
-- Maven的生命周期和插件是在项目中绑定的，当然，maven已经默认绑定了一些基础的插件（上表）。注意，并非所有生命周期阶段都有绑定到插件。另外，还可以通过插件配置扩展功能（build的extensions）。
+- Maven的生命周期和插件是在项目中绑定的，当然，maven已经默认绑定了一些基础的插件（内置绑定，上表）。注意，并非所有生命周期阶段都有绑定到插件。另外，还可以通过插件配置扩展功能（外置绑定，build的extensions）。
 
 ## Maven指令
+maven指令是用来控制项目构建过程的，通过指令配合项目的配置（特别是插件的使用），可以达到灵活构建的效果。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- mvn 后出现phase，实际作用的是绑定了插件的goal
+- mvn 后跟 插件名：目标 ，这样的方式多是在使用pom文件中配置的插件
 
 ## 插件配置
+插件的配置多种多样，可以总结为
+```
+pom.xml
+|-project
+     |- ...
+     |-build
+     |      |- ...
+     |      |-plugins
+     |          |-groupId
+     |          |-artifactId
+     |          |-version
+     |          |-configuration
+     |          |     |- ...
+     |          |-executions
+     |               |- ...
+     |               |-execution
+     |                    |-id
+     |                    |-phase
+     |                    |-goals
+     |                       |-goal  
+     |- ...
 ```
 
+一个栗子
 ```
+<project>
+  ...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  ...
+</project>
+```
+
+又一个栗子
+```
+<project>
+  ...
+  <build>
+    <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <configuration>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+    </plugins>
+  </build>
+  ...
+</project>
+```
+
+
+## 小结
+Maven插件的使用还需要多多学习，这里只是一些基本逻辑，具体使用还要好好整理下时下热门的插件，好好演练下。

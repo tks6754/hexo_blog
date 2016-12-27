@@ -59,7 +59,7 @@ hexo默认使用Landspace主题，不是很好用，也不够好看，还是支�
 
 [Next使用指南](http://theme-next.iissnan.com/)
 
-看代码，页面宽度很重要，哈哈。[调整桌面显示页面宽度](https://github.com/iissnan/hexo-theme-next/issues/759#issuecomment-202242848)
+看代码，页面宽度很重要，哈哈。[调整桌面显示页面宽度](https://github.com/iissnan/hexo-theme-next/issues/759#issuecomment-202242848);还有网站要有自己的[小图标](http://theme-next.iissnan.com/faqs.html#favicon)
 
 ## Hexo站源码保存方案
 
