@@ -48,6 +48,9 @@ pom.xml
 通过-P参数来显示激活，激活多个profile时可以用 逗号 分隔开，排除使用感叹号。
 > mvn -U clean package -Ptest,local,!ignore
 
+一般还会见到跳过默认test的profile
+> -Dmaven.test.skip=true
+
 IDEA中在MavenProject里可以直接勾选profile，也很好用
 
 ### 隐式激活
