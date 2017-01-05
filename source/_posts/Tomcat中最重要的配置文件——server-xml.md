@@ -110,3 +110,4 @@ Tomcat定义了多种Realm实现：JDBC Database Realm、DataSource Database Rea
 
 
 #### Logger
+记录日志组件，Tomcat运行日志，Catalina类日志
