@@ -17,8 +17,12 @@ Tomcat是一个基于组件的web服务器，自然的，这些组件都是可�
 
 图中每个组件，可以对应到 server.xml 文件中。大部分可以重复配置，少数几个只能出现配置一个。
 
+<!-- more -->
+
 ## 最外层的server
 server标识的是Catalina servlet组件，是tomcat最外层组件。
+
+每一个server组件会起服务，专门监听指定端口，等待“关闭”指令来停止服务。
 
 常见属性
 | 属性 | 作用     |
@@ -53,8 +57,8 @@ Service是Tomcat最重要的组件，这个组件组成一个完整服务。
 Connector的作用是用来获得请求，然后将请求送往Engine
 
 根据请求来源的不同一般分为两种
-- 来自客户端的请求，支持的协议是 HTTP/1.1 。即 HTTP Connector
-- 来自其他服务器的请求，一般支持的协议是 AJP/1.3 。 即 AJP Connector
+- 来自客户端（浏览器）的请求，支持的协议是 HTTP/1.1 。即 HTTP Connector
+- 来自其他服务器（IIS、Nginx）的请求，一般支持的协议是 AJP/1.3 。 即 AJP Connector
 
 常用属性
 | 属性 | 作用     |
@@ -64,9 +68,12 @@ Connector的作用是用来获得请求，然后将请求送往Engine
 | protocol  | 使用的协议  |
 | connectionTimeout    | 默认为“20000”，单位是ms。一个请求的最长连接时间   |
 | redirectPort  | 默认为“8433”，在处理http请求时，转发收到的SSL传输请求  |   
+| enableLookups | “true”或“false”，通过request.getRemoteHost()方法，根据DNS查询来获取客户端主机名  |
+| maxThreads  | 最大并发连接数，默认200个  |
+
 
 ### Engine
-Service中只能包含一个Engine，Engine来处理所有Connector接收的请求，并把不同的请求发往不同的Host。由Host处理完请求，再经由Engine返回给Connector。
+每个Service中只能包含一个Engine，Engine是Servlet引擎，来处理所有Connector接收的请求，并把不同的请求发往不同的Host。由Host处理完请求，再经由Engine返回给Connector。
 
 常用属性
 | 属性 | 作用     |
@@ -96,9 +103,12 @@ Host代表一个 Virtual Host，即虚拟主机。每个Host与某个网络域�
 | path  | web项目的url  |
 | docBase | web项目的存放目录，可以是绝对路径，可以是相对与Host的appBase的相对路径  |
 | reloadable | web项目重载。为true时，Tomcat会实时根据 /WEB-INF/lib 和 /WEB-INF/classes 目录的变化，自动装载新的应用程序  |
-|   |   |
-|   |   |
-|   |   |
+
+```
+到这里可以总结一些在浏览器中访问web项目的url问题。
+一般，在本地运行一个web项目的uri地址为：http://localhost:8080/web。
+未完～
+```
 
 #### Value
 Valve类似于过滤器，它可以工作于Engine和Host/Context之间、Host和Context之间以及Context和Web应用程序的某资源之间。一个容器内可以建立多个Valve，而且Valve定义的次序也决定了它们生效的次序。
@@ -108,6 +118,9 @@ Realm可以理解为包含用户、密码、角色的”数据库”。
 
 Tomcat定义了多种Realm实现：JDBC Database Realm、DataSource Database Realm、JNDI Directory Realm、UserDatabase Realm等
 
-
 #### Logger
 记录日志组件，Tomcat运行日志，Catalina类日志
+
+
+## 小结
+了解Tomcat的基本组件，特别是Service组件内部的关系，Tomcat是怎样接收请求，处理请求的基本流程。然后，关于Realm组件和Value组件，后续还需要专门学习下，看看在实际项目中是怎么使用的。
