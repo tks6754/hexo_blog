@@ -4,7 +4,7 @@ date: 2017-01-11 23:18:41
 category:
     - Mybatis
 tags:
-    -Mybatis
+    - Mybatis
 ---
 Mybatis是一个Java实现的数据持久层开源框架，其内部封装了JDBC操作，简化了很多操作。Mybatis用映射的方式，使程序猿将注意力集中在SQL，而且实现了动态SQL使用，具有很好的可用性。
 
