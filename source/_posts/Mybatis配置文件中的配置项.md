@@ -130,7 +130,7 @@ public class Student{ }
   - class 相对路径，定位mapper接口
 2. package
   - name 相对路径，定位mapper接口所在的包，自动加载所有mapper接口
-
+keyi
 ```xml
 <mappers>
   <mapper resource="org/mybatis/builder/AuthorMapper.xml"/>
@@ -142,6 +142,10 @@ public class Student{ }
   <package name="org.mybatis.builder"/>
 </mappers>
 ```
+
+### 这里有个要注意的地方 ###
+使用 mapper-class 或 package-name 的方式来配置，要求mapper.xml文件的目录路径必须与对应的接口目录路径相同；如果配置的是mapper.xml文件的路径，那么则不需要，只需要在映射文件中指明namespace就可以了。
+
 
 ## 总体结构
 ```
