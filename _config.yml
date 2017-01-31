@@ -73,5 +73,6 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: github
-  repo: https://github.com/tks6754/tks6754.github.io.git
+  type: git
+  repo:
+    github:https://github.com/tks6754/tks6754.github.io.git
