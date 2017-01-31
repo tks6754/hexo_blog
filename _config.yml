@@ -74,5 +74,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:tks6754/tks6754.github.io.git
+  repo: https://github.com/tks6754/tks6754.github.io.git
   branch: master
