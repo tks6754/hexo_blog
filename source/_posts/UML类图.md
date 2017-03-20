@@ -21,7 +21,9 @@ UML类图应该是UML13种图形中最常用的，它属于静态图大类，是
 - 接口 接口有两种方式，文字说明，也有使用“棒棒糖”符号标识，“小棒棒糖”表示很常见。
   ![interface](https://github.com/tks6754/Photos01/raw/master/uml-interface.png)
   ![interface](https://github.com/tks6754/Photos01/raw/master/uml-interface2.png)
+
 <!-- more -->
+
 画法总结：
 1. 类、接口的名称放在第一行，抽象类和接口需要用文字或符号说明
 2. 第二行是属性，具体格式如下
