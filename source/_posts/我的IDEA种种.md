@@ -19,3 +19,5 @@ tags:
 Settings --> Editor --> Code Style --> File Encodings --> "UTF-8"并勾选旁边选项(win下有作用)
 
 <!-- more -->
+## Maven 配置
+Settings --> Build,Exection,Deployment --> Build Tools --> Maven (位置和repos位置)
